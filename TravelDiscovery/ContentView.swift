@@ -12,8 +12,8 @@ struct ContentView: View {
         NavigationView {
             // Scroll main view
             ScrollView {
-                
                 DiscoverCategoriesView()
+                PopularDestinationsView()
             }
             .navigationTitle("Discover")
             
@@ -32,7 +32,7 @@ struct DiscoverCategoriesView: View {
         ScrollView(.horizontal, showsIndicators: false, content: {
             // A horizontal stack of rounded icons
             HStack(spacing: 12) {
-                ForEach(0 ..< 12) { value in
+                ForEach(1 ..< 8) { value in
                     VStack(content: {
                         Spacer()
                             .frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -40,7 +40,40 @@ struct DiscoverCategoriesView: View {
                             .cornerRadius(.infinity)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
-                        Text("Hello")
+                        Text("Category \(value)")
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                    })
+                }
+            }.padding(.horizontal)
+        })
+    }
+}
+
+struct PopularDestinationsView: View {
+    var body: some View {
+        HStack {
+            Text("Popular destinations")
+                .font(.system(size: 14, weight: .semibold))
+            Spacer()
+            Text("See all")
+                .font(.system(size: 12, weight: .semibold))
+        }
+        .padding(.horizontal)
+        .padding(.top)
+        
+        ScrollView(.horizontal, showsIndicators: false, content: {
+            // A horizontal stack of rounded icons
+            HStack(spacing: 12) {
+                ForEach(1 ..< 8) { value in
+                    VStack(content: {
+                        Spacer()
+                            .frame(width: 100, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .background(Color.gray)
+                            .cornerRadius(12)
+                            .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                        
+                        Text("Destination \(value)")
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                     })
