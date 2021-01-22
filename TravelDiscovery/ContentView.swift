@@ -14,6 +14,7 @@ struct ContentView: View {
             ScrollView {
                 DiscoverCategoriesView()
                 PopularDestinationsView()
+                PopularPlacesView()
             }
             .navigationTitle("Discover")
             
@@ -74,6 +75,39 @@ struct PopularDestinationsView: View {
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
                         Text("Destination \(value)")
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                    })
+                }
+            }.padding(.horizontal)
+        })
+    }
+}
+
+struct PopularPlacesView: View {
+    var body: some View {
+        HStack {
+            Text("Popular places to eat")
+                .font(.system(size: 14, weight: .semibold))
+            Spacer()
+            Text("See all")
+                .font(.system(size: 12, weight: .semibold))
+        }
+        .padding(.horizontal)
+        .padding(.top)
+        
+        ScrollView(.horizontal, showsIndicators: false, content: {
+            // A horizontal stack of rounded icons
+            HStack(spacing: 12) {
+                ForEach(1 ..< 8) { value in
+                    VStack(content: {
+                        Spacer()
+                            .frame(width: 220, height: 80, alignment: .center)
+                            .background(Color.gray)
+                            .cornerRadius(12)
+                            .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                        
+                        Text("Place \(value)")
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                     })
