@@ -29,20 +29,35 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+struct Category: Hashable {
+    let title: String
+    let iconName: String
+}
+
 struct DiscoverCategoriesView: View {
+    // iconName is retrieved from SF Symbols app
+    let categories: [Category] = [
+        .init(title: "Art", iconName: "paintpalette.fill"),
+        .init(title: "Sport", iconName: "sportscourt.fill"),
+        .init(title: "Live Events", iconName: "music.mic"),
+        .init(title: "Food", iconName: "tray.fill"),
+        .init(title: "History", iconName: "books.vertical.fill")
+    ]
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false, content: {
             // A horizontal stack of rounded icons
             HStack(spacing: 12) {
-                ForEach(1 ..< 8) { value in
+                ForEach(categories, id: \.self) { category in
                     VStack(content: {
-                        Spacer()
+                        Image(systemName: category.iconName)
                             .frame(width: 68, height: 68, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(.white)
                             .background(Color.gray)
-                            .cornerRadius(.infinity)
+                            .cornerRadius(34)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
-                        Text("Category \(value)")
+                        Text(category.title)
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                     })
