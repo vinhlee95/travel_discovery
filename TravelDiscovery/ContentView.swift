@@ -15,6 +15,7 @@ struct ContentView: View {
                 DiscoverCategoriesView()
                 PopularDestinationsView()
                 PopularPlacesView()
+                TrendingCreatorsView()
             }
             .navigationTitle("Discover")
             
@@ -36,7 +37,7 @@ struct DiscoverCategoriesView: View {
                 ForEach(1 ..< 8) { value in
                     VStack(content: {
                         Spacer()
-                            .frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .frame(width: 68, height: 68, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .background(Color.gray)
                             .cornerRadius(.infinity)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
@@ -108,6 +109,39 @@ struct PopularPlacesView: View {
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
                         Text("Place \(value)")
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                    })
+                }
+            }.padding(.horizontal)
+        })
+    }
+}
+
+struct TrendingCreatorsView: View {
+    var body: some View {
+        HStack {
+            Text("Trending Creators")
+                .font(.system(size: 14, weight: .semibold))
+            Spacer()
+            Text("See all")
+                .font(.system(size: 12, weight: .semibold))
+        }
+        .padding(.horizontal)
+        .padding(.top)
+        
+        ScrollView(.horizontal, showsIndicators: false, content: {
+            // A horizontal stack of rounded icons
+            HStack(spacing: 12) {
+                ForEach(1 ..< 8) { value in
+                    VStack(content: {
+                        Spacer()
+                            .frame(width: 50, height: 50, alignment: .center)
+                            .background(Color.gray)
+                            .cornerRadius(.infinity)
+                            .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                        
+                        Text("Creator \(value)")
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                     })
