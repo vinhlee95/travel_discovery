@@ -100,7 +100,7 @@ struct PopularDestinationsView: View {
                             .scaledToFill()
                             .frame(width: 125, height: 125)
                             // cornerRadius has to be defined before paddings
-                            .cornerRadius(5)
+                            .cornerRadius(4)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 6)
                         
@@ -125,7 +125,16 @@ struct PopularDestinationsView: View {
     }
 }
 
+struct Restaurant: Hashable {
+    let name, imageName: String
+}
+
 struct PopularPlacesView: View {
+    let restaurants: [Restaurant] = [
+        .init(name: "Japan's Finest Tapas", imageName: "tapas"),
+        .init(name: "Bar & Grill", imageName: "bar_grill")
+    ]
+    
     var body: some View {
         HStack {
             Text("Popular places to eat")
@@ -137,24 +146,47 @@ struct PopularPlacesView: View {
         .padding(.horizontal)
         .padding(.top)
         
-        ScrollView(.horizontal, showsIndicators: false, content: {
-            // A horizontal stack of rounded icons
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(1 ..< 8) { value in
-                    VStack(content: {
-                        Spacer()
-                            .frame(width: 220, height: 80, alignment: .center)
-                            .background(Color.gray)
-                            .cornerRadius(12)
-                            .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
-                        
-                        Text("Place \(value)")
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
-                    })
+                ForEach(restaurants, id: \.self) { restaurant in
+                    HStack(spacing: 8) {
+                        // Image view
+                        Image(restaurant.imageName)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 60)
+                            .clipped()
+                            .cornerRadius(4)
+                            .padding(.vertical, 8)
+                            .padding(.leading, 8)
+                                                
+                        // Content view
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text(restaurant.name)
+                                Spacer()
+                                Button(action: {}, label: {
+                                    Image(systemName: "ellipsis").foregroundColor(.gray)
+                                })
+                            }
+                            
+                            HStack {
+                                Image(systemName: "star.fill")
+                                Text("4.7 - Sushi - $$")
+                            }
+                            
+                            Text("Tokyo, Japan")
+                        }.font(.system(size: 12, weight: .semibold))
+                    }
+                    .frame(width: 220, height: 80, alignment: .center)
+                    .background(Color(.init(white: 0.9, alpha: 1)))
+                    .cornerRadius(12)
+                    .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                 }
-            }.padding(.horizontal)
-        })
+            }
+                .padding(.horizontal)
+                .padding(.bottom)
+        }
     }
 }
 
