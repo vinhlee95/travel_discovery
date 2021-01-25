@@ -190,7 +190,17 @@ struct PopularPlacesView: View {
     }
 }
 
+struct Creator: Hashable {
+    let name, image: String
+}
+
 struct TrendingCreatorsView: View {
+    let creators: [Creator] = [
+        .init(name: "Amy Adams", image: "amy"),
+        .init(name: "Billy Childs", image: "billy"),
+        .init(name: "Sam Smith", image: "sam")
+    ]
+    
     var body: some View {
         HStack {
             Text("Trending Creators")
@@ -204,19 +214,22 @@ struct TrendingCreatorsView: View {
         
         ScrollView(.horizontal, showsIndicators: false, content: {
             // A horizontal stack of rounded icons
-            HStack(spacing: 12) {
-                ForEach(1 ..< 8) { value in
-                    VStack(content: {
-                        Spacer()
-                            .frame(width: 50, height: 50, alignment: .center)
-                            .background(Color.gray)
-                            .cornerRadius(.infinity)
+            HStack(alignment: .top, spacing: 12) {
+                ForEach(creators, id: \.self) { creator in
+                    VStack {
+                        Image(creator.image)
+                            .resizable()
+                            .scaledToFill()
+                            .clipped()
+                            .frame(width: 64, height: 64)
+                            .cornerRadius(32)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
-                        Text("Creator \(value)")
+                        Text(creator.name)
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
-                    })
+                            .lineLimit(1)
+                    }.frame(width: 68)
                 }
             }.padding(.horizontal)
         })
