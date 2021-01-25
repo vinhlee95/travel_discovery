@@ -26,6 +26,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            
     }
 }
 
@@ -67,7 +68,17 @@ struct DiscoverCategoriesView: View {
     }
 }
 
+struct Destination: Hashable {
+    let city, country, imageName: String
+}
+
 struct PopularDestinationsView: View {
+    let destinations: [Destination] = [
+        .init(city: "Paris", country: "France", imageName: "eiffel_tower"),
+        .init(city: "Tokyo", country: "Japan", imageName: "japan"),
+        .init(city: "New York", country: "America", imageName: "new_york")
+    ]
+    
     var body: some View {
         HStack {
             Text("Popular destinations")
@@ -79,24 +90,38 @@ struct PopularDestinationsView: View {
         .padding(.horizontal)
         .padding(.top)
         
-        ScrollView(.horizontal, showsIndicators: false, content: {
+        ScrollView(.horizontal, showsIndicators: false) {
             // A horizontal stack of rounded icons
             HStack(spacing: 12) {
-                ForEach(1 ..< 8) { value in
-                    VStack(content: {
-                        Spacer()
-                            .frame(width: 100, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .background(Color.gray)
-                            .cornerRadius(12)
-                            .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                ForEach(destinations, id: \.self) { destination in
+                    VStack(alignment: .leading, spacing: 0){
+                        Image(destination.imageName)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 125, height: 125)
+                            // cornerRadius has to be defined before paddings
+                            .cornerRadius(5)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
                         
-                        Text("Destination \(value)")
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
-                    })
+                        VStack {
+                            Text(destination.city)
+                                .font(.system(size: 12, weight: .semibold))
+                            Text(destination.country)
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 8)
+                    }
+                        .background(Color(.init(white: 0.9, alpha: 1)))
+                        .cornerRadius(12)
+                        .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                        .padding(.bottom, 12)
                 }
-            }.padding(.horizontal)
-        })
+            }
+            .padding(.horizontal)
+        }
     }
 }
 
