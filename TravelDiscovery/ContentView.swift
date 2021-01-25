@@ -8,17 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+    }
+
     var body: some View {
+        
         NavigationView {
-            // Scroll main view
-            ScrollView {
-                DiscoverCategoriesView()
-                PopularDestinationsView()
-                PopularPlacesView()
-                TrendingCreatorsView()
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 0.683354039, blue: 0.2954197473, alpha: 1)), Color(#colorLiteral(red: 1, green: 0.7056216287, blue: 0.2278487719, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                
+                Color(.init(white: 0.95, alpha: 1)).offset(y: 300)
+                
+                // Scroll main view
+                ScrollView {
+                    DiscoverCategoriesView()
+                    VStack {
+                        PopularDestinationsView()
+                        PopularPlacesView()
+                        TrendingCreatorsView()
+                    }.background(Color(.init(white: 0.95, alpha: 1)))
+                    .cornerRadius(16)
+                    .padding(.top, 12)
+                }
             }
             .navigationTitle("Discover")
-            
         }
     }
 }
@@ -53,14 +70,15 @@ struct DiscoverCategoriesView: View {
                     VStack(content: {
                         Image(systemName: category.iconName)
                             .frame(width: 68, height: 68, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(.white)
-                            .background(Color.gray)
+                            .foregroundColor(Color(#colorLiteral(red: 0.8982358136, green: 0.5987940428, blue: 0.2159923648, alpha: 1)))
+                            .background(Color.white)
                             .cornerRadius(34)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
                         Text(category.title)
                             .font(.system(size: 12, weight: .semibold))
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                            .foregroundColor(.white)
                     })
                 }
             }.padding(.horizontal)
@@ -114,7 +132,7 @@ struct PopularDestinationsView: View {
                         .padding(.horizontal, 12)
                         .padding(.bottom, 8)
                     }
-                        .background(Color(.init(white: 0.9, alpha: 1)))
+                    .background(Color.white)
                         .cornerRadius(12)
                         .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         .padding(.bottom, 12)
@@ -179,7 +197,7 @@ struct PopularPlacesView: View {
                         }.font(.system(size: 12, weight: .semibold))
                     }
                     .frame(width: 220, height: 80, alignment: .center)
-                    .background(Color(.init(white: 0.9, alpha: 1)))
+                    .background(Color.white)
                     .cornerRadius(12)
                     .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                 }
