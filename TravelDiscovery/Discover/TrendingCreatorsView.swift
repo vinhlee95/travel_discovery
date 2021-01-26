@@ -23,7 +23,6 @@ struct TrendingCreatorsView: View {
                 .font(.system(size: 12, weight: .semibold))
         }
         .padding(.horizontal)
-        .padding(.top)
         
         ScrollView(.horizontal, showsIndicators: false, content: {
             // A horizontal stack of rounded icons
@@ -39,7 +38,7 @@ struct TrendingCreatorsView: View {
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
                         Text(creator.name)
-                            .font(.system(size: 12, weight: .semibold))
+                            .smallSemiboldText()
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                             .lineLimit(1)
                     }.frame(width: 68)

@@ -25,13 +25,13 @@ struct DiscoverCategoriesView: View {
                     VStack(content: {
                         Image(systemName: category.iconName)
                             .frame(width: 68, height: 68, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(Color(#colorLiteral(red: 0.8982358136, green: 0.5987940428, blue: 0.2159923648, alpha: 1)))
+                            .foregroundColor(Color.primaryColor)
                             .background(Color.white)
                             .cornerRadius(34)
                             .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
                         
                         Text(category.title)
-                            .font(.system(size: 12, weight: .semibold))
+                            .smallSemiboldText()
                             .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                             .foregroundColor(.white)
                     })

@@ -41,18 +41,15 @@ struct PopularDestinationsView: View {
                         
                         VStack {
                             Text(destination.city)
-                                .font(.system(size: 12, weight: .semibold))
+                                .smallSemiboldText()
                             Text(destination.country)
-                                .font(.system(size: 12, weight: .semibold))
+                                .smallSemiboldText()
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 12)
                         .padding(.bottom, 8)
                     }
-                    .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
-                        .padding(.bottom, 12)
+                    .tileStyle()
                 }
             }
             .padding(.horizontal)

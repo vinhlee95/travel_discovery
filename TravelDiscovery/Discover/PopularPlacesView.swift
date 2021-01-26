@@ -54,12 +54,10 @@ struct PopularPlacesView: View {
                             }
                             
                             Text("Tokyo, Japan")
-                        }.font(.system(size: 12, weight: .semibold))
+                        }.smallSemiboldText()
                     }
                     .frame(width: 220, height: 80, alignment: .center)
-                    .background(Color.white)
-                    .cornerRadius(12)
-                    .shadow(color: .gray, radius: 5, x: 0.0, y: 2)
+                    .tileStyle()
                 }
             }
                 .padding(.horizontal)
