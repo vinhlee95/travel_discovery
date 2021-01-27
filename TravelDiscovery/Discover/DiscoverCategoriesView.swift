@@ -46,18 +46,52 @@ struct DiscoverCategoriesView: View {
     }
 }
 
+class CategoryDetailsViewModel: ObservableObject {
+    @Published var isLoading = true
+    @Published var places = [Int]()
+    
+    init() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.isLoading = false
+            self.places = [1,2,3]
+        }
+    }
+}
+
+struct ActivityIndicatorView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let aiv = UIActivityIndicatorView(style: .large)
+        aiv.startAnimating()
+        return aiv
+    }
+    
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
+        
+    }
+    
+    typealias UIViewType = UIActivityIndicatorView
+}
+
 struct CategoryDetailsView: View {
+    @ObservedObject var observable = CategoryDetailsViewModel()
+    
     var body: some View {
-        ScrollView {
-            ForEach(1..<3, id: \.self) { num in
-                VStack(alignment: .leading, spacing: 0) {
-                    Image("art\(num)")
-                        .resizable()
-                        .scaledToFill()
-                        .tileStyle()
-                    Text("Image title")
-                        .smallSemiboldText()
-                }.padding()
+        ZStack {
+            if observable.isLoading {
+                ActivityIndicatorView()
+            } else {
+                ScrollView {
+                    ForEach(observable.places, id: \.self) { num in
+                        VStack(alignment: .leading, spacing: 0) {
+                            Image("art\(num)")
+                                .resizable()
+                                .scaledToFill()
+                                .tileStyle()
+                            Text("Image title")
+                                .smallSemiboldText()
+                        }.padding()
+                    }
+                }
             }
         }.navigationBarTitle("Category", displayMode: .inline)
     }
