@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct DiscoverCategoriesView: View {
     // iconName is retrieved from SF Symbols app
@@ -46,11 +47,6 @@ struct DiscoverCategoriesView: View {
     }
 }
 
-struct Place: Decodable, Hashable {
-    let name, thumbnail, country: String
-    let id: Int
-}
-
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var places = [Place]()
@@ -78,20 +74,6 @@ class CategoryDetailsViewModel: ObservableObject {
     }
 }
 
-struct ActivityIndicatorView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIActivityIndicatorView {
-        let aiv = UIActivityIndicatorView(style: .large)
-        aiv.startAnimating()
-        return aiv
-    }
-    
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
-        
-    }
-    
-    typealias UIViewType = UIActivityIndicatorView
-}
-
 struct CategoryDetailsView: View {
     @ObservedObject var observable = CategoryDetailsViewModel()
     
@@ -105,7 +87,7 @@ struct CategoryDetailsView: View {
                     ScrollView {
                         ForEach(observable.places, id: \.self) { place in
                             VStack(alignment: .leading, spacing: 0) {
-                                Image("art1")
+                                KFImage(URL(string: place.thumbnail))
                                     .resizable()
                                     .scaledToFill()
                                     .tileStyle()
@@ -122,10 +104,8 @@ struct CategoryDetailsView: View {
 
 struct DiscoverCategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-//        DiscoverCategoriesView()
         NavigationView {
             CategoryDetailsView()
         }
-        DiscoverView()
     }
 }
