@@ -11,11 +11,11 @@ import Kingfisher
 struct DiscoverCategoriesView: View {
     // iconName is retrieved from SF Symbols app
     let categories: [Category] = [
-        .init(title: "Art", iconName: "paintpalette.fill"),
-        .init(title: "Sport", iconName: "sportscourt.fill"),
-        .init(title: "Live Events", iconName: "music.mic"),
-        .init(title: "Food", iconName: "tray.fill"),
-        .init(title: "History", iconName: "books.vertical.fill")
+        .init(title: "Art", iconName: "paintpalette.fill", category: "art"),
+        .init(title: "Sport", iconName: "sportscourt.fill", category: "sports"),
+        .init(title: "Live Events", iconName: "music.mic", category: "events"),
+        .init(title: "Food", iconName: "tray.fill", category: "food"),
+        .init(title: "History", iconName: "books.vertical.fill", category: "history")
     ]
     
     var body: some View {
@@ -24,7 +24,7 @@ struct DiscoverCategoriesView: View {
             HStack(spacing: 12) {
                 ForEach(categories, id: \.self) { category in
                     NavigationLink(
-                        destination: CategoryDetailsView(),
+                        destination: CategoryDetailsView(name: category.title, category: category.category),
                         label: {
                             VStack(content: {
                                 Image(systemName: category.iconName)
@@ -52,30 +52,42 @@ class CategoryDetailsViewModel: ObservableObject {
     @Published var places = [Place]()
     @Published var errorMessage: String = ""
     
-    init() {
+    init(category: String) {
         print("Fetching data")
-        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else {return}
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=\(category)") else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-                guard let data = data else {
-                    self.isLoading = false
-                    return
-                }
-                
-                do {
-                    self.places = try JSONDecoder().decode([Place].self, from: data)
-                } catch {
-                    print("Failed to decode JSON", error)
-                    self.errorMessage = error.localizedDescription
-                }
-                
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 400 {
+                self.errorMessage = "Unable to fetch data for the category. Bad status code \(statusCode)."
                 self.isLoading = false
+                return
+            }
+            
+            guard let data = data else {
+                self.isLoading = false
+                return
+            }
+            
+            do {
+                self.places = try JSONDecoder().decode([Place].self, from: data)
+            } catch {
+                print("Failed to decode JSON", error)
+                self.errorMessage = error.localizedDescription
+            }
+            
+            self.isLoading = false
         }.resume()
     }
 }
 
 struct CategoryDetailsView: View {
-    @ObservedObject var observable = CategoryDetailsViewModel()
+    private let name: String
+    @ObservedObject private var observable: CategoryDetailsViewModel
+    
+    init(name: String, category: String) {
+        self.name = name
+        self.observable = CategoryDetailsViewModel(category: category)
+    }
     
     var body: some View {
         ZStack {
@@ -98,14 +110,15 @@ struct CategoryDetailsView: View {
                     }
                 }
             }
-        }.navigationBarTitle("Category", displayMode: .inline)
+        }.navigationBarTitle(name, displayMode: .inline)
     }
 }
 
 struct DiscoverCategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            CategoryDetailsView()
-        }
+//        NavigationView {
+//            CategoryDetailsView()
+//        }
+        DiscoverView()
     }
 }

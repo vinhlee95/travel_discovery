@@ -14,6 +14,7 @@ struct Destination: Hashable {
 struct Category: Hashable {
     let title: String
     let iconName: String
+    let category: String
 }
 
 struct Restaurant: Hashable {
