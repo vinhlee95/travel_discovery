@@ -46,15 +46,35 @@ struct DiscoverCategoriesView: View {
     }
 }
 
+struct Place: Decodable, Hashable {
+    let name, thumbnail, country: String
+    let id: Int
+}
+
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
-    @Published var places = [Int]()
+    @Published var places = [Place]()
+    @Published var errorMessage: String = ""
     
     init() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.isLoading = false
-            self.places = [1,2,3]
-        }
+        print("Fetching data")
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard let data = data else {
+                    self.isLoading = false
+                    return
+                }
+                
+                do {
+                    self.places = try JSONDecoder().decode([Place].self, from: data)
+                } catch {
+                    print("Failed to decode JSON", error)
+                    self.errorMessage = error.localizedDescription
+                }
+                
+                self.isLoading = false
+        }.resume()
     }
 }
 
@@ -80,16 +100,19 @@ struct CategoryDetailsView: View {
             if observable.isLoading {
                 ActivityIndicatorView()
             } else {
-                ScrollView {
-                    ForEach(observable.places, id: \.self) { num in
-                        VStack(alignment: .leading, spacing: 0) {
-                            Image("art\(num)")
-                                .resizable()
-                                .scaledToFill()
-                                .tileStyle()
-                            Text("Image title")
-                                .smallSemiboldText()
-                        }.padding()
+                ZStack {
+                    Text(observable.errorMessage)
+                    ScrollView {
+                        ForEach(observable.places, id: \.self) { place in
+                            VStack(alignment: .leading, spacing: 0) {
+                                Image("art1")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .tileStyle()
+                                Text(place.name)
+                                    .smallSemiboldText()
+                            }.padding()
+                        }
                     }
                 }
             }
