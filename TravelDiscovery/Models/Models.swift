@@ -9,6 +9,7 @@ import Foundation
 
 struct Destination: Hashable {
     let city, country, imageName: String
+    let lat, lng: Double
 }
 
 struct Category: Hashable {

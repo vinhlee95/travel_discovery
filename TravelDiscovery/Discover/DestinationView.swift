@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PopularDestinationsView: View {
     let destinations: [Destination] = [
-        .init(city: "Paris", country: "France", imageName: "eiffel_tower"),
-        .init(city: "Tokyo", country: "Japan", imageName: "japan"),
-        .init(city: "New York", country: "America", imageName: "new_york")
+        .init(city: "Paris", country: "France", imageName: "eiffel_tower", lat: 48.85965, lng: 2.353235),
+        .init(city: "Tokyo", country: "Japan", imageName: "japan", lat: 35.6682233, lng: 139.6706567),
+        .init(city: "New York", country: "America", imageName: "new_york", lat: 40.697403, lng: -74.1201055)
     ]
     
     var body: some View {
@@ -30,7 +30,7 @@ struct PopularDestinationsView: View {
             HStack(spacing: 12) {
                 ForEach(destinations, id: \.self) { destination in
                     NavigationLink(
-                        destination: LazyView(DestinationDetailsView(city: destination.city, country: destination.country, image: destination.imageName)),
+                        destination: LazyView(DestinationDetailsView(city: destination.city, country: destination.country, image: destination.imageName, lat: destination.lat, lng: destination.lng)),
                         label: {
                             VStack(alignment: .leading, spacing: 0){
                                 Image(destination.imageName)
