@@ -51,6 +51,5 @@ struct DiscoverCategoriesView_Previews: PreviewProvider {
         NavigationView {
             CategoryDetailsView(name: "Art", category: "art")
         }
-        DiscoverView()
     }
 }
