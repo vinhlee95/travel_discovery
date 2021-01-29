@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B22D3D525C3214200D141B8 /* CategoryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22D3D425C3214200D141B8 /* CategoryDetailsView.swift */; };
+		1B22D3DD25C3BAEF00D141B8 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22D3DC25C3BAEF00D141B8 /* LazyView.swift */; };
 		1B4A4C0625BA85D800516641 /* TravelDiscoveryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A4C0525BA85D800516641 /* TravelDiscoveryApp.swift */; };
 		1B4A4C0825BA85D800516641 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A4C0725BA85D800516641 /* DiscoverView.swift */; };
 		1B4A4C0A25BA85D900516641 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B4A4C0925BA85D900516641 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B22D3D425C3214200D141B8 /* CategoryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsView.swift; sourceTree = "<group>"; };
+		1B22D3DC25C3BAEF00D141B8 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		1B4A4C0225BA85D800516641 /* TravelDiscovery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelDiscovery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B4A4C0525BA85D800516641 /* TravelDiscoveryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelDiscoveryApp.swift; sourceTree = "<group>"; };
 		1B4A4C0725BA85D800516641 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
@@ -90,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B22D3D325C3212100D141B8 /* CategoryDetails */ = {
+			isa = PBXGroup;
+			children = (
+				1B22D3D425C3214200D141B8 /* CategoryDetailsView.swift */,
+			);
+			path = CategoryDetails;
+			sourceTree = "<group>";
+		};
 		1B4A4BF925BA85D800516641 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +165,7 @@
 		1B7DF75B25BFD2C7000ABA53 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				1B22D3D325C3212100D141B8 /* CategoryDetails */,
 				1B4A4C0725BA85D800516641 /* DiscoverView.swift */,
 				1BB9A9CA25BFD4DC00094AA6 /* DiscoverCategoriesView.swift */,
 				1BB9A9CF25BFD51800094AA6 /* DestinationView.swift */,
@@ -176,6 +189,7 @@
 				1BB9A9EB25BFDDDF00094AA6 /* TextModifer.swift */,
 				1BB9A9F325BFDED000094AA6 /* TileModifier.swift */,
 				1BA3F3EC25C281CA006EEDC9 /* ActivityIndicatorView.swift */,
+				1B22D3DC25C3BAEF00D141B8 /* LazyView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -315,7 +329,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B22D3DD25C3BAEF00D141B8 /* LazyView.swift in Sources */,
 				1B4A4C0825BA85D800516641 /* DiscoverView.swift in Sources */,
+				1B22D3D525C3214200D141B8 /* CategoryDetailsView.swift in Sources */,
 				1BA3F3ED25C281CA006EEDC9 /* ActivityIndicatorView.swift in Sources */,
 				1BB9A9F425BFDED000094AA6 /* TileModifier.swift in Sources */,
 				1BB9A9D025BFD51800094AA6 /* DestinationView.swift in Sources */,
