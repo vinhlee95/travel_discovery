@@ -42,7 +42,7 @@ struct DestinationDetailsView: View {
                     }.foregroundColor(.orange)
                 }
                 
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.").font(.system(size: 14))
+                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.").font(.system(size: 14))
                 
                 HStack {Spacer()}
             }.padding(.horizontal)
@@ -55,12 +55,21 @@ struct DestinationDetailsView: View {
             
             // $region is bound to the Map
             // meaning region state variable will be updated when user moves around the map
-            Map(coordinateRegion: $region)
-                .frame(height: 200)
+            Map(coordinateRegion: $region, annotationItems: attractions) { attraction in
+                MapMarker(coordinate: .init(latitude: attraction.lat, longitude: attraction.lng), tint: .red)
+            }.frame(height: 300)
             
         }.navigationBarTitle(city, displayMode: .inline)
     }
+    
+    let attractions: [Attraction] = [
+        .init(name: "Eiffel tower", lat: 48.85965, lng: 2.353235),
+        .init(name: "Champs-Elysees", lat: 48.866867, lng: 2.311780),
+        .init(name: "Louvre Museum", lat: 48.860288, lng: 2.337789)
+    ]
 }
+
+
 
 struct DestinationDetailsView_Previews: PreviewProvider {
     static var previews: some View {

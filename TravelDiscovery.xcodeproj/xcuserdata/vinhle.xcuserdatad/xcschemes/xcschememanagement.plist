@@ -4,10 +4,35 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>TravelDiscovery 1.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>TravelDiscovery.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1B4A4C0125BA85D800516641</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B4A4C1225BA85D900516641</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B4A4C1D25BA85D900516641</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

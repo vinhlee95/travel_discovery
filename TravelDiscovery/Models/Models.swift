@@ -30,3 +30,10 @@ struct Place: Decodable, Hashable {
     let name, thumbnail, country: String
     let id: Int
 }
+
+struct Attraction: Identifiable {
+    let id = UUID().uuidString
+    
+    let name: String
+    let lat, lng: Double
+}
