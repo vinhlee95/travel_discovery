@@ -12,6 +12,7 @@ struct DestinationDetailsView: View {
     private let city, country, image: String
     private let lat, lng: Double
     @State var region: MKCoordinateRegion
+    @State var showAttractions = false
     
     init(city: String, country: String, image: String, lat: Double, lng: Double) {
         self.city = city
@@ -51,11 +52,15 @@ struct DestinationDetailsView: View {
             HStack {
                 Text("Location").font(.system(size: 16, weight: .bold))
                 Spacer()
+                Button(action: {showAttractions.toggle()}, label: {
+                    Text("\(showAttractions ? "Hide" : "Show") attractions").font(.system(size: 14, weight: .semibold))
+                })
+                Toggle("", isOn: $showAttractions).labelsHidden()
             }.padding(.horizontal)
             
             // $region is bound to the Map
             // meaning region state variable will be updated when user moves around the map
-            Map(coordinateRegion: $region, annotationItems: attractions) { attraction in
+            Map(coordinateRegion: $region, annotationItems: showAttractions ? attractions : []) { attraction in
                 MapMarker(coordinate: .init(latitude: attraction.lat, longitude: attraction.lng), tint: .red)
             }.frame(height: 300)
             
