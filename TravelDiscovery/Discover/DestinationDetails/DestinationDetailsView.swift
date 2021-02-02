@@ -12,7 +12,7 @@ struct DestinationDetailsView: View {
     private let city, country, image: String
     private let lat, lng: Double
     @State var region: MKCoordinateRegion
-    @State var showAttractions = false
+    @State var showAttractions = true
     
     init(city: String, country: String, image: String, lat: Double, lng: Double) {
         self.city = city
@@ -20,7 +20,7 @@ struct DestinationDetailsView: View {
         self.image = image
         self.lat = lat
         self.lng = lng
-        self._region = State(initialValue: MKCoordinateRegion(center: .init(latitude: lat, longitude: lng), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+        self._region = State(initialValue: MKCoordinateRegion(center: .init(latitude: lat, longitude: lng), span: .init(latitudeDelta: 0.05, longitudeDelta: 0.05)))
     }
     
     var body: some View {
@@ -61,16 +61,31 @@ struct DestinationDetailsView: View {
             // $region is bound to the Map
             // meaning region state variable will be updated when user moves around the map
             Map(coordinateRegion: $region, annotationItems: showAttractions ? attractions : []) { attraction in
-                MapMarker(coordinate: .init(latitude: attraction.lat, longitude: attraction.lng), tint: .red)
+                MapAnnotation(coordinate: .init(latitude: attraction.lat, longitude: attraction.lng), content: {
+                    VStack {
+                        Image(attraction.image)
+                            .resizable()
+                            .frame(width: 80, height: 60)
+                            .cornerRadius(8)
+                        Text(attraction.name)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 4)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/))
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 14))
+                            .cornerRadius(4)
+                            .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.blue))
+                    }.shadow(radius: 5)
+                })
             }.frame(height: 300)
             
         }.navigationBarTitle(city, displayMode: .inline)
     }
     
     let attractions: [Attraction] = [
-        .init(name: "Eiffel tower", lat: 48.85965, lng: 2.353235),
-        .init(name: "Champs-Elysees", lat: 48.866867, lng: 2.311780),
-        .init(name: "Louvre Museum", lat: 48.860288, lng: 2.337789)
+        .init(name: "Eiffel tower", image: "eiffel_tower", lat: 48.85965, lng: 2.353235),
+        .init(name: "Champs-Elysees", image: "japan", lat: 48.866867, lng: 2.311780),
+        .init(name: "Louvre Museum", image: "new_york", lat: 48.860288, lng: 2.337789)
     ]
 }
 

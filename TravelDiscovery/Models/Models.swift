@@ -34,6 +34,6 @@ struct Place: Decodable, Hashable {
 struct Attraction: Identifiable {
     let id = UUID().uuidString
     
-    let name: String
+    let name, image: String
     let lat, lng: Double
 }
