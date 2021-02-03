@@ -25,11 +25,14 @@ struct DestinationDetailsView: View {
     
     var body: some View {
         ScrollView {
-            Image(image)
-                .resizable()
-                .scaledToFill()
-                .clipped()
-                .frame(height: 200)
+            DestinationHeaderContainer()
+                .frame(height: 250)
+            
+//            Image(image)
+//                .resizable()
+//                .scaledToFill()
+//                .clipped()
+//                .frame(height: 200)
                         
             VStack(alignment: .leading) {
                 Text(city)
@@ -78,6 +81,12 @@ struct DestinationDetailsView: View {
                     }.shadow(radius: 5)
                 })
             }.frame(height: 300)
+            
+            Text("Hello there")
+                .padding(.vertical, 12)
+                .foregroundColor(Color.blue)
+                .smallSemiboldText()
+                
             
         }.navigationBarTitle(city, displayMode: .inline)
     }
