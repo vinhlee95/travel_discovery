@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Create a view that represents a UIKit view controller
+// https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let pvc = CustomPageViewController()
@@ -21,6 +23,8 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
 }
 
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    // Integrate SwiftUI views into current UIKit view hierarchy
+    // https://developer.apple.com/documentation/swiftui/uihostingcontroller
     private let firstVC = UIHostingController(rootView: Text("First view"))
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
