@@ -10,8 +10,10 @@ import SwiftUI
 // Create a view that represents a UIKit view controller
 // https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
+    let imageNames: [String]
+    
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController()
+        let pvc = CustomPageViewController(imageNames: imageNames)
         return pvc
     }
     
@@ -25,10 +27,11 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     // Integrate SwiftUI views into current UIKit view hierarchy
     // https://developer.apple.com/documentation/swiftui/uihostingcontroller
+    
     private let firstVC = UIHostingController(rootView: Text("First view"))
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
-    private let imageNames: [String] = ["eiffel_tower", "japan", "new_york"]
+    private var imageNames: [String]
     lazy var allVCs: [UIViewController] = imageNames.map { (imageName) -> UIViewController in
         let vc = UIHostingController(rootView:
             Image(imageName)
@@ -59,7 +62,10 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         return index == allVCs.count - 1 ? nil : allVCs[index + 1]
     }
     
-    init() {
+    init(imageNames: [String]) {
+        // Initialize imageNames injected from calling code
+        self.imageNames = imageNames
+        
         // Show page dot
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .orange
@@ -74,6 +80,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         
         // This is needed to show pagination dots
         self.delegate = self
+        
     }
     
     required init?(coder: NSCoder) {

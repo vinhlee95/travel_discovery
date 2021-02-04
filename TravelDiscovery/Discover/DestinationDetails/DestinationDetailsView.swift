@@ -11,6 +11,8 @@ import MapKit
 struct DestinationDetailsView: View {
     private let city, country, image: String
     private let lat, lng: Double
+    private let imageNames = ["eiffel_tower", "japan", "new_york"]
+    
     @State var region: MKCoordinateRegion
     @State var showAttractions = true
     
@@ -25,7 +27,7 @@ struct DestinationDetailsView: View {
     
     var body: some View {
         ScrollView {
-            DestinationHeaderContainer()
+            DestinationHeaderContainer(imageNames: imageNames)
                 .frame(height: 250)
                         
             VStack(alignment: .leading) {
