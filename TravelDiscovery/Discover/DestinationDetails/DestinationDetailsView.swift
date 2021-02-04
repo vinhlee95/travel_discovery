@@ -27,12 +27,6 @@ struct DestinationDetailsView: View {
         ScrollView {
             DestinationHeaderContainer()
                 .frame(height: 250)
-            
-//            Image(image)
-//                .resizable()
-//                .scaledToFill()
-//                .clipped()
-//                .frame(height: 200)
                         
             VStack(alignment: .leading) {
                 Text(city)
@@ -50,7 +44,6 @@ struct DestinationDetailsView: View {
                 
                 HStack {Spacer()}
             }.padding(.horizontal)
-            .padding(.top, 44)
             
             HStack {
                 Text("Location").font(.system(size: 16, weight: .bold))

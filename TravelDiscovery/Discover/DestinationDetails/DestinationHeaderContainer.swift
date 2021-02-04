@@ -28,7 +28,15 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     private let firstVC = UIHostingController(rootView: Text("First view"))
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
-    lazy var allVCs: [UIViewController] = [firstVC, secondVC, thirdVC]
+    private let imageNames: [String] = ["eiffel_tower", "japan", "new_york"]
+    lazy var allVCs: [UIViewController] = imageNames.map { (imageName) -> UIViewController in
+        let vc = UIHostingController(rootView:
+            Image(imageName)
+                .resizable()
+                .scaledToFill()
+        )
+        return vc
+    }
     
     // We need this to show the pagination dots
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
@@ -59,7 +67,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
         // Specify the very first page of the view
-        setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+        setViewControllers([allVCs.first!], direction: .forward, animated: true, completion: nil)
         
         // Specify dataSource so that the view is swipe-able
         self.dataSource = self
@@ -75,10 +83,10 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
     static var previews: some View {
-        DestinationHeaderContainer()
+//        DestinationHeaderContainer()
         // Uncomment this to see the context where this view is used in
-//        NavigationView {
-//            DestinationDetailsView(city: "Paris", country: "France", image: "eiffel_tower", lat: 48.85965, lng: 2.353235)
-//        }
+        NavigationView {
+            DestinationDetailsView(city: "Paris", country: "France", image: "eiffel_tower", lat: 48.85965, lng: 2.353235)
+        }
     }
 }
