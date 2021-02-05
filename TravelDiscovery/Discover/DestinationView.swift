@@ -30,7 +30,7 @@ struct PopularDestinationsView: View {
             HStack(spacing: 12) {
                 ForEach(destinations, id: \.self) { destination in
                     NavigationLink(
-                        destination: LazyView(DestinationDetailsView(city: destination.city, country: destination.country, image: destination.imageName, lat: destination.lat, lng: destination.lng)),
+                        destination: LazyView(DestinationDetailsView(city: destination.city)),
                         label: {
                             VStack(alignment: .leading, spacing: 0){
                                 Image(destination.imageName)

@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // Create a view that represents a UIKit view controller
 // https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
-    let imageNames: [String]
+    let imageUrls: [String]
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController(imageNames: imageNames)
+        let pvc = CustomPageViewController(imageUrls: imageUrls)
         return pvc
     }
     
@@ -31,12 +32,11 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     private let firstVC = UIHostingController(rootView: Text("First view"))
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
-    private var imageNames: [String]
-    lazy var allVCs: [UIViewController] = imageNames.map { (imageName) -> UIViewController in
+    private var imageUrls: [String]
+    lazy var allVCs: [UIViewController] = imageUrls.map { (imageName) -> UIViewController in
         let vc = UIHostingController(rootView:
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
+            KFImage(URL(string: imageName))
+                .resizable().scaledToFill()
         )
         return vc
     }
@@ -62,9 +62,9 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         return index == allVCs.count - 1 ? nil : allVCs[index + 1]
     }
     
-    init(imageNames: [String]) {
-        // Initialize imageNames injected from calling code
-        self.imageNames = imageNames
+    init(imageUrls: [String]) {
+        // Initialize imageUrls injected from calling code
+        self.imageUrls = imageUrls
         
         // Show page dot
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
@@ -73,7 +73,9 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
         // Specify the very first page of the view
-        setViewControllers([allVCs.first!], direction: .forward, animated: true, completion: nil)
+        if let firstVc = allVCs.first {
+            setViewControllers([firstVc], direction: .forward, animated: true, completion: nil)            
+        }
         
         // Specify dataSource so that the view is swipe-able
         self.dataSource = self
@@ -93,7 +95,7 @@ struct DestinationHeaderContainer_Previews: PreviewProvider {
 //        DestinationHeaderContainer()
         // Uncomment this to see the context where this view is used in
         NavigationView {
-            DestinationDetailsView(city: "Paris", country: "France", image: "eiffel_tower", lat: 48.85965, lng: 2.353235)
+            DestinationDetailsView(city: "Paris")
         }
     }
 }

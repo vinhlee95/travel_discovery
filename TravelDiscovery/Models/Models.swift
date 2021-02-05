@@ -37,3 +37,10 @@ struct Attraction: Identifiable {
     let name, image: String
     let lat, lng: Double
 }
+
+struct DestinationModel: Decodable {
+    let name, country, description, thumbnail: String
+    let photos: [String]
+    let latitude, longitude: Double
+}
+
