@@ -27,37 +27,12 @@ struct PopularPlacesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(restaurants, id: \.self) { restaurant in
-                    HStack(spacing: 8) {
-                        // Image view
-                        Image(restaurant.imageName)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 60)
-                            .clipped()
-                            .cornerRadius(4)
-                            .padding(.vertical, 8)
-                            .padding(.leading, 8)
-                                                
-                        // Content view
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(restaurant.name)
-                                Spacer()
-                                Button(action: {}, label: {
-                                    Image(systemName: "ellipsis").foregroundColor(.gray)
-                                })
-                            }
-                            
-                            HStack {
-                                Image(systemName: "star.fill")
-                                Text("4.7 - Sushi - $$")
-                            }
-                            
-                            Text("Tokyo, Japan")
-                        }.smallSemiboldText()
-                    }
-                    .frame(width: 220, height: 80, alignment: .center)
-                    .tileStyle()
+                    NavigationLink(
+                        destination: LazyView(RestaurantDetailsView(restaurant: restaurant)),
+                        label: {
+                            RestaurantTile(restaurant: restaurant).foregroundColor(.black)
+                        }
+                    )
                 }
             }
                 .padding(.horizontal)
@@ -66,8 +41,47 @@ struct PopularPlacesView: View {
     }
 }
 
+struct RestaurantTile: View {
+    let restaurant: Restaurant
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            // Image view
+            Image(restaurant.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60)
+                .clipped()
+                .cornerRadius(4)
+                .padding(.vertical, 8)
+                .padding(.leading, 8)
+                                    
+            // Content view
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text(restaurant.name)
+                    Spacer()
+                    Button(action: {}, label: {
+                        Image(systemName: "ellipsis").foregroundColor(.gray)
+                    })
+                }
+                
+                HStack {
+                    Image(systemName: "star.fill")
+                    Text("4.7 - Sushi - $$")
+                }
+                
+                Text("Tokyo, Japan")
+            }.smallSemiboldText()
+        }
+        .frame(width: 220, height: 80, alignment: .center)
+        .tileStyle()
+    }
+}
+
 struct PopularPlacesView_Previews: PreviewProvider {
     static var previews: some View {
-        PopularPlacesView()
+//        PopularPlacesView()
+        DiscoverView()
     }
 }

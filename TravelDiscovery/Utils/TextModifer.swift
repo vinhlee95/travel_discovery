@@ -13,14 +13,26 @@ struct SmallSemiboldText: ViewModifier {
     }
 }
 
+struct Heading: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(.system(size: 18, weight: .bold))
+    }
+}
+
 extension View {
     func smallSemiboldText() -> some View {
         self.modifier(SmallSemiboldText())
+    }
+    
+    func heading() -> some View {
+        self.modifier(Heading())
     }
 }
 
 struct TextModifer: View {
     var body: some View {
+        Text("I am a heading").heading()
+        
         Text("Small and semibold text").smallSemiboldText()
     }
 }
