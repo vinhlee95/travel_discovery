@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PopularPlacesView: View {
     let restaurants: [Restaurant] = [
-        .init(name: "Japan's Finest Tapas", imageName: "tapas"),
-        .init(name: "Bar & Grill", imageName: "bar_grill")
+        .init(name: "Japan's Finest Tapas", imageName: "tapas", id: 0),
+        .init(name: "Bar & Grill", imageName: "bar_grill", id: 1)
     ]
     
     var body: some View {
@@ -28,7 +28,7 @@ struct PopularPlacesView: View {
             HStack(spacing: 12) {
                 ForEach(restaurants, id: \.self) { restaurant in
                     NavigationLink(
-                        destination: LazyView(RestaurantDetailsView(restaurant: restaurant)),
+                        destination: LazyView(RestaurantDetailsView(id: restaurant.id)),
                         label: {
                             RestaurantTile(restaurant: restaurant).foregroundColor(.black)
                         }

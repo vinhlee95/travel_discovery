@@ -20,6 +20,7 @@ struct Category: Hashable {
 
 struct Restaurant: Hashable {
     let name, imageName: String
+    let id: Int
 }
 
 struct Creator: Hashable {
