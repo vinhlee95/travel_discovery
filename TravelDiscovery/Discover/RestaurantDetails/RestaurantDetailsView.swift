@@ -25,7 +25,7 @@ struct RestaurantDetailsView: View {
         } else {
             if let restaurantDetail = observable.restaurantDetail {
                 ScrollView() {
-                    RestaurantHeader(photo: restaurantDetail.thumbnail, name: restaurantDetail.name).scaledToFit()
+                    RestaurantHeader(photo: restaurantDetail.thumbnail, name: restaurantDetail.name, imageUrls: restaurantDetail.photos).scaledToFit()
                     
                     VStack(alignment: .leading) {
                         RestaurantDescription(restaurantDetail: restaurantDetail)
@@ -57,6 +57,7 @@ struct RestaurantDetailsView: View {
 
 struct RestaurantHeader: View {
     let photo, name: String
+    let imageUrls: [String]
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -81,7 +82,11 @@ struct RestaurantHeader: View {
                 
                 Spacer()
                 
-                Text("See more photos").foregroundColor(.white).frame(width: 80)
+                NavigationLink(
+                    destination: LazyView(RestaurantPhotosView(imageUrls: imageUrls)),
+                    label: {
+                        Text("See more photos").foregroundColor(.white).frame(width: 80)
+                    })
             }.padding()
             
         }

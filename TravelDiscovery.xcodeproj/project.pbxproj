@@ -28,6 +28,7 @@
 		1BB9A9EC25BFDDDF00094AA6 /* TextModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB9A9EB25BFDDDF00094AA6 /* TextModifer.swift */; };
 		1BB9A9F425BFDED000094AA6 /* TileModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB9A9F325BFDED000094AA6 /* TileModifier.swift */; };
 		1BC6736A25D23B7C00E47E19 /* RestaurantDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC6736925D23B7C00E47E19 /* RestaurantDetailsViewModel.swift */; };
+		1BC6737025D252A000E47E19 /* RestaurantPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC6736F25D252A000E47E19 /* RestaurantPhotosView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		1BB9A9EB25BFDDDF00094AA6 /* TextModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModifer.swift; sourceTree = "<group>"; };
 		1BB9A9F325BFDED000094AA6 /* TileModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileModifier.swift; sourceTree = "<group>"; };
 		1BC6736925D23B7C00E47E19 /* RestaurantDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsViewModel.swift; sourceTree = "<group>"; };
+		1BC6736F25D252A000E47E19 /* RestaurantPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPhotosView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				1B080AD425CEE20E00849BB5 /* RestaurantDetailsView.swift */,
 				1BC6736925D23B7C00E47E19 /* RestaurantDetailsViewModel.swift */,
+				1BC6736F25D252A000E47E19 /* RestaurantPhotosView.swift */,
 			);
 			path = RestaurantDetails;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				1BB9A9CB25BFD4DC00094AA6 /* DiscoverCategoriesView.swift in Sources */,
 				1BC6736A25D23B7C00E47E19 /* RestaurantDetailsViewModel.swift in Sources */,
 				1BB9A9E025BFD60600094AA6 /* Models.swift in Sources */,
+				1BC6737025D252A000E47E19 /* RestaurantPhotosView.swift in Sources */,
 				1BB9A9EC25BFDDDF00094AA6 /* TextModifer.swift in Sources */,
 				1B080AD525CEE20E00849BB5 /* RestaurantDetailsView.swift in Sources */,
 			);
