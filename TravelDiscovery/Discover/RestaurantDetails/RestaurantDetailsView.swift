@@ -30,16 +30,20 @@ struct RestaurantDetailsView: View {
                     VStack(alignment: .leading) {
                         RestaurantDescription(restaurantDetail: restaurantDetail)
                         
-                        // Hack to make the description fully displayed
-                        Spacer()
-                        
                         Text("Popular dishes").heading().padding(.vertical, 8)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 ForEach(restaurantDetail.popularDishes, id: \.self) {dish in
-                                    DishCard(dish: dish)
-                                        .frame(height: 120)
+                                    DishCard(dish: dish).frame(height: 120)
                                 }
+                            }
+                        }
+                        
+                        Text("Customer reviews").heading().padding(.vertical, 8)
+                        VStack {
+                            ForEach(restaurantDetail.reviews, id: \.self) { review in
+                                ReviewCell(review: review)
+                                
                             }
                         }
                         
@@ -63,7 +67,7 @@ struct RestaurantHeader: View {
             LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
             
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text(name)
                         .foregroundColor(.white)
                         .font(.system(size: 18, weight: .bold))
@@ -73,13 +77,12 @@ struct RestaurantHeader: View {
                             Image(systemName: "star.fill")
                         }.foregroundColor(.yellow)
                     }
-                }.padding()
+                }
                 
                 Spacer()
                 
-                Text("See more photos")
-                    .foregroundColor(.white)
-            }.padding(.horizontal, 8)
+                Text("See more photos").foregroundColor(.white).frame(width: 80)
+            }.padding()
             
         }
     }
@@ -98,7 +101,7 @@ struct RestaurantDescription: View {
             }.foregroundColor(.orange)
         }.padding(.bottom, 8)
         
-        Text(restaurantDetail.description)
+        Text(restaurantDetail.description).displayFullSize()
     }
 }
 
@@ -128,6 +131,43 @@ struct DishCard: View {
         }
     }
 }
+
+struct ReviewCell: View {
+    let review: Review
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                KFImage(URL(string: review.user.profileImage))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .cornerRadius(20)
+                
+                VStack(alignment: .leading) {
+                    Text("\(review.user.firstName) \(review.user.lastName)")
+                        .smallSemiboldText()
+                    
+                    HStack(spacing: 2) {
+                        ForEach(0..<5, id: \.self) {number in
+                            if number < review.rating {
+                                Image(systemName: "star.fill").foregroundColor(.yellow).font(.system(size: 12))
+                            } else {
+                                Image(systemName: "star.fill").font(.system(size: 12))
+                            }
+                        }
+                    }
+                }
+                
+                Spacer()
+                Text("Dec 2020").font(.system(size: 12))
+            }
+            
+            Text(review.text).font(.system(size: 14)).displayFullSize()
+        }.padding(.bottom)
+    }
+}
+
 
 struct RestaurantDetailsview_Previews: PreviewProvider {
     static var previews: some View {
