@@ -8,31 +8,80 @@
 import SwiftUI
 import Kingfisher
 
+let GRID_MODE = "Grid"
+let LIST_MODE = "List"
+
 struct RestaurantPhotosView: View {
+    let imageUrls: [String]
+    let availableModes = [GRID_MODE, LIST_MODE]
+    @State var mode = GRID_MODE
+    
+    var body: some View {
+        ScrollView {
+            Picker("Image picker", selection: $mode) {
+                ForEach(availableModes, id: \.self) {
+                    Text($0)
+                }
+            }.pickerStyle(SegmentedPickerStyle())
+            
+            if mode == GRID_MODE {
+                RestaurantImagesGridView(imageUrls: imageUrls)
+            } else {
+                RestaurantImagesListView(imageUrls: imageUrls)
+            }
+        }.navigationBarTitle("All photos", displayMode: .inline)
+    }
+}
+
+struct RestaurantImagesGridView: View {
+    let imageUrls: [String]
+    var body: some View {
+        GeometryReader { geometry in
+            LazyVGrid(
+                // define grid system and spacing between COLUMNS
+                columns: [
+                    GridItem(.adaptive(minimum: geometry.size.width/3 - 20, maximum: 300), spacing: 16)
+                ],
+                // define spacing between ROWS
+                spacing: 4,
+                content: {
+                    ForEach(imageUrls, id: \.self) {imageUrl in
+                        KFImage(URL(string: imageUrl))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width/3, height: geometry.size.width/3)
+                            .clipped()
+                    }
+                }
+            ).padding(.horizontal, 4)
+        }
+    }
+}
+
+struct RestaurantImagesListView: View {
     let imageUrls: [String]
     
     var body: some View {
         ScrollView {
-            GeometryReader { geometry in
-                LazyVGrid(
-                    // define grid system and spacing between COLUMNS
-                    columns: [
-                        GridItem(.adaptive(minimum: geometry.size.width/3 - 20, maximum: 300), spacing: 16)
-                    ],
-                    // define spacing between ROWS
-                    spacing: 4,
-                    content: {
-                        ForEach(imageUrls, id: \.self) {imageUrl in
-                            KFImage(URL(string: imageUrl))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: geometry.size.width/3, height: geometry.size.width/3)
-                                .clipped()
-                        }
-                    }
-                ).padding(.horizontal, 4)
+            ForEach(imageUrls, id: \.self) {imageUrl in
+                VStack {
+                    KFImage(URL(string: imageUrl))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 250)
+                        .clipped()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Here is the description of the photo. Here is the description of the photo. Here is the description of the photo. Here is the description of the photo.")
+                            .padding(.bottom, 8)
+                        
+                        Text("Posted on January 1, 2021.")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 14))
+                    }.padding(.horizontal, 4)
+                }.padding(.bottom)
             }
-        }.navigationBarTitle("All photos", displayMode: .inline)
+        }
     }
 }
 
