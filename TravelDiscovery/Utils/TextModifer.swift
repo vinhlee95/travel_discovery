@@ -19,6 +19,15 @@ struct Heading: ViewModifier {
     }
 }
 
+// Make Text to render with all lines that it needs
+// https://stackoverflow.com/questions/56507497/views-compressed-by-other-views-in-swiftui-vstack-and-list/57677746#57677746
+
+struct FullSizeDisplay: ViewModifier {
+    func body(content: Content) -> some View {
+        content.fixedSize(horizontal: false, vertical: true)
+    }
+}
+
 extension View {
     func smallSemiboldText() -> some View {
         self.modifier(SmallSemiboldText())
@@ -26,6 +35,12 @@ extension View {
     
     func heading() -> some View {
         self.modifier(Heading())
+    }
+}
+
+extension Text {
+    func displayFullSize() -> some View {
+        self.modifier(FullSizeDisplay())
     }
 }
 
