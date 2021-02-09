@@ -45,3 +45,26 @@ struct DestinationModel: Decodable {
     let latitude, longitude: Double
 }
 
+struct RestaurantDetail: Hashable, Decodable {
+    let id: Int
+    let name, city, country, description: String
+    let photos: [String]
+    let thumbnail: String
+    let popularDishes: [Dish]
+    let reviews: [Review]
+}
+
+struct Dish: Decodable, Hashable {
+    let name, price, photo: String
+    let numPhotos: Int
+}
+
+struct Review: Decodable, Hashable {
+    let user: ReviewUser
+    let rating: Int
+    let text: String
+}
+
+struct ReviewUser: Decodable, Hashable {
+    let firstName, lastName, profileImage: String
+}
