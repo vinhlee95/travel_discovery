@@ -13,6 +13,12 @@ struct RestaurantDetail: Hashable, Decodable {
     let name, city, country, description: String
     let photos: [String]
     let thumbnail: String
+    let popularDishes: [Dish]
+}
+
+struct Dish: Decodable, Hashable {
+    let name, price, photo: String
+    let numPhotos: Int
 }
 
 class RestaurantDetailsViewModel: ObservableObject {
@@ -71,62 +77,20 @@ struct RestaurantDetailsView: View {
         } else {
             if let restaurantDetail = observable.restaurantDetail {
                 ScrollView() {
-                    ZStack(alignment: .bottomLeading) {
-                        KFImage(URL(string: restaurantDetail.thumbnail))
-                            .resizable()
-                            .scaledToFill()
-                        
-                        LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
-                        
-                        HStack {
-                            VStack {
-                                Text(restaurantDetail.name)
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 18, weight: .bold))
-                                
-                                HStack {
-                                    ForEach(0..<5, id: \.self) { number in
-                                        Image(systemName: "star.fill")
-                                    }.foregroundColor(.yellow)
-                                }
-                            }.padding()
-                            
-                            Spacer()
-                            
-                            Text("See more photos")
-                                .foregroundColor(.white)
-                        }.padding(.horizontal, 8)
-                        
-                    }.scaledToFit()
+                    RestaurantHeader(photo: restaurantDetail.thumbnail, name: restaurantDetail.name).scaledToFit()
                     
                     VStack(alignment: .leading) {
-                        Text("Location & Description").heading().padding(.bottom, 4)
+                        RestaurantDescription(restaurantDetail: restaurantDetail)
                         
-                        Text("\(restaurantDetail.city), \(restaurantDetail.country)").padding(.bottom, 2)
-                        
-                        HStack {
-                            ForEach(0..<3, id: \.self) {number in
-                                Image(systemName: "dollarsign.circle.fill")
-                            }.foregroundColor(.orange)
-                        }.padding(.bottom, 8)
-                        
-                        Text(restaurantDetail.description)
+                        // Hack to make the description fully displayed
+                        Spacer()
                         
                         Text("Popular dishes").heading().padding(.vertical, 8)
-                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(0..<3, id: \.self) {number in
-                                    VStack(alignment: .leading) {
-                                        Image("japan")
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 150)
-                                            .cornerRadius(8)
-                                        
-                                        Text("Japanese Tapas").smallSemiboldText()
-                                        Text("79 photos").font(.system(size: 12)).foregroundColor(.gray)
-                                    }
+                                ForEach(restaurantDetail.popularDishes, id: \.self) {dish in
+                                    DishCard(dish: dish)
+                                        .frame(height: 120)
                                 }
                             }
                         }
@@ -135,6 +99,84 @@ struct RestaurantDetailsView: View {
                     
                 }.navigationBarTitle("Restaurant Details", displayMode: .inline)
             }
+        }
+    }
+}
+
+struct RestaurantHeader: View {
+    let photo, name: String
+    
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            KFImage(URL(string: photo))
+                .resizable()
+                .scaledToFill()
+            
+            LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+            
+            HStack {
+                VStack {
+                    Text(name)
+                        .foregroundColor(.white)
+                        .font(.system(size: 18, weight: .bold))
+                    
+                    HStack {
+                        ForEach(0..<5, id: \.self) { number in
+                            Image(systemName: "star.fill")
+                        }.foregroundColor(.yellow)
+                    }
+                }.padding()
+                
+                Spacer()
+                
+                Text("See more photos")
+                    .foregroundColor(.white)
+            }.padding(.horizontal, 8)
+            
+        }
+    }
+}
+
+struct RestaurantDescription: View {
+    let restaurantDetail: RestaurantDetail
+    
+    var body: some View {
+        Text("Location & Description").heading().padding(.bottom, 4)
+        Text("\(restaurantDetail.city), \(restaurantDetail.country)").padding(.bottom, 2)
+        
+        HStack {
+            ForEach(0..<3, id: \.self) {number in
+                Image(systemName: "dollarsign.circle.fill")
+            }.foregroundColor(.orange)
+        }.padding(.bottom, 8)
+        
+        Text(restaurantDetail.description)
+    }
+}
+
+struct DishCard: View {
+    let dish: Dish
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            ZStack(alignment: .bottomTrailing) {
+                KFImage(URL(string: dish.photo))
+                    .resizable()
+                    .scaledToFill()
+                
+                LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+                
+                HStack {
+                    Text(dish.price)
+                        .foregroundColor(.white)
+                        .font(.system(size: 14, weight: .semibold))
+                        .padding(.leading, 4)
+                    Spacer()
+                }
+            }.cornerRadius(8)
+            
+            Text(dish.name).smallSemiboldText()
+            Text(String(dish.numPhotos)).font(.system(size: 12)).foregroundColor(.gray)
         }
     }
 }
