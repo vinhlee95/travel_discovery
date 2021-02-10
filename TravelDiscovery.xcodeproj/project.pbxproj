@@ -17,7 +17,7 @@
 		1B4A4C0D25BA85D900516641 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B4A4C0C25BA85D900516641 /* Preview Assets.xcassets */; };
 		1B4A4C1825BA85D900516641 /* TravelDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A4C1725BA85D900516641 /* TravelDiscoveryTests.swift */; };
 		1B4A4C2325BA85D900516641 /* TravelDiscoveryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A4C2225BA85D900516641 /* TravelDiscoveryUITests.swift */; };
-		1B97CE1D25C919990096CB11 /* DestinationHeaderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97CE1C25C919990096CB11 /* DestinationHeaderContainer.swift */; };
+		1B97CE1D25C919990096CB11 /* CarouselImageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97CE1C25C919990096CB11 /* CarouselImageViewContainer.swift */; };
 		1BA3F3E825C27D98006EEDC9 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA3F3E725C27D98006EEDC9 /* Kingfisher */; };
 		1BA3F3ED25C281CA006EEDC9 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA3F3EC25C281CA006EEDC9 /* ActivityIndicatorView.swift */; };
 		1BB9A9CB25BFD4DC00094AA6 /* DiscoverCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB9A9CA25BFD4DC00094AA6 /* DiscoverCategoriesView.swift */; };
@@ -65,7 +65,7 @@
 		1B4A4C1E25BA85D900516641 /* TravelDiscoveryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelDiscoveryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B4A4C2225BA85D900516641 /* TravelDiscoveryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelDiscoveryUITests.swift; sourceTree = "<group>"; };
 		1B4A4C2425BA85D900516641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B97CE1C25C919990096CB11 /* DestinationHeaderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHeaderContainer.swift; sourceTree = "<group>"; };
+		1B97CE1C25C919990096CB11 /* CarouselImageViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselImageViewContainer.swift; sourceTree = "<group>"; };
 		1BA3F3EC25C281CA006EEDC9 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		1BB9A9CA25BFD4DC00094AA6 /* DiscoverCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCategoriesView.swift; sourceTree = "<group>"; };
 		1BB9A9CF25BFD51800094AA6 /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
@@ -126,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				1B22D3E225C3C67F00D141B8 /* DestinationDetailsView.swift */,
-				1B97CE1C25C919990096CB11 /* DestinationHeaderContainer.swift */,
 			);
 			path = DestinationDetails;
 			sourceTree = "<group>";
@@ -194,6 +193,7 @@
 		1B7DF75B25BFD2C7000ABA53 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				1BFD873325D3A62300628734 /* Shared */,
 				1B080AD325CEE1F100849BB5 /* RestaurantDetails */,
 				1B22D3E125C3C67300D141B8 /* DestinationDetails */,
 				1B22D3D325C3212100D141B8 /* CategoryDetails */,
@@ -223,6 +223,14 @@
 				1B22D3DC25C3BAEF00D141B8 /* LazyView.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		1BFD873325D3A62300628734 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				1B97CE1C25C919990096CB11 /* CarouselImageViewContainer.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +374,7 @@
 				1B22D3E325C3C67F00D141B8 /* DestinationDetailsView.swift in Sources */,
 				1BA3F3ED25C281CA006EEDC9 /* ActivityIndicatorView.swift in Sources */,
 				1BB9A9F425BFDED000094AA6 /* TileModifier.swift in Sources */,
-				1B97CE1D25C919990096CB11 /* DestinationHeaderContainer.swift in Sources */,
+				1B97CE1D25C919990096CB11 /* CarouselImageViewContainer.swift in Sources */,
 				1BB9A9D025BFD51800094AA6 /* DestinationView.swift in Sources */,
 				1BB9A9DA25BFD58C00094AA6 /* TrendingCreatorsView.swift in Sources */,
 				1B4A4C0625BA85D800516641 /* TravelDiscoveryApp.swift in Sources */,

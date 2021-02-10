@@ -10,11 +10,12 @@ import Kingfisher
 
 // Create a view that represents a UIKit view controller
 // https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable
-struct DestinationHeaderContainer: UIViewControllerRepresentable {
+struct CarouselImageViewContainer: UIViewControllerRepresentable {
     let imageUrls: [String]
+    let shouldFillFrame: Bool
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController(imageUrls: imageUrls)
+        let pvc = CustomPageViewController(imageUrls: imageUrls, shouldFillFrame: shouldFillFrame)
         return pvc
     }
     
@@ -33,12 +34,18 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
     private var imageUrls: [String]
+    private let shouldFillFrame: Bool
     lazy var allVCs: [UIViewController] = imageUrls.map { (imageName) -> UIViewController in
         let vc = UIHostingController(rootView:
             ZStack {
-                Color.black
-                KFImage(URL(string: imageName))
-                    .resizable().scaledToFit()
+                if shouldFillFrame {
+                    KFImage(URL(string: imageName))
+                        .resizable().scaledToFill()
+                } else {
+                    Color.black
+                    KFImage(URL(string: imageName))
+                        .resizable().scaledToFit()
+                }
             }
         )
         return vc
@@ -65,9 +72,10 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         return index == allVCs.count - 1 ? nil : allVCs[index + 1]
     }
     
-    init(imageUrls: [String]) {
+    init(imageUrls: [String], shouldFillFrame: Bool) {
         // Initialize imageUrls injected from calling code
         self.imageUrls = imageUrls
+        self.shouldFillFrame = shouldFillFrame
         
         // Show page dot
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
@@ -93,9 +101,9 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 }
 
-struct DestinationHeaderContainer_Previews: PreviewProvider {
+struct CarouselImageViewContainer_Previews: PreviewProvider {
     static var previews: some View {
-//        DestinationHeaderContainer()
+//        CarouselImageViewContainer()
         // Uncomment this to see the context where this view is used in
         NavigationView {
             DestinationDetailsView(city: "Paris")

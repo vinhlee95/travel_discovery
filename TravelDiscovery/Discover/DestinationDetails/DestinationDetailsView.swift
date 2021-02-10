@@ -73,7 +73,7 @@ struct DestinationDetailsView: View {
             
             if let destination = destination {
                 ScrollView {
-                    DestinationHeaderContainer(imageUrls: destination.photos )
+                    CarouselImageViewContainer(imageUrls: destination.photos, shouldFillFrame: true)
                         .frame(height: 250)
                                 
                     VStack(alignment: .leading) {

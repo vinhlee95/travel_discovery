@@ -46,7 +46,7 @@ struct FullscreenImageModal: View {
             ZStack(alignment: .topLeading) {
                 Color.black.ignoresSafeArea()
 
-                DestinationHeaderContainer(imageUrls: imageUrls)
+                CarouselImageViewContainer(imageUrls: imageUrls, shouldFillFrame: false)
                 Button(action: {closeModal()}, label: {
                     Image(systemName: "xmark")
                         .font(.system(size: 28, weight: .bold))
