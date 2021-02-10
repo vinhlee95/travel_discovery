@@ -14,10 +14,13 @@ let LIST_MODE = "List"
 struct RestaurantPhotosView: View {
     let imageUrls: [String]
     let availableModes = [GRID_MODE, LIST_MODE]
-    @State var mode = LIST_MODE
+    @State var mode = GRID_MODE
+    @State var isModalShown = false
     
     var body: some View {
         ScrollView {
+            FullscreenImageModal(show: $isModalShown, closeModal: {isModalShown.toggle()}, imageUrls: imageUrls)
+            
             Picker("Image picker", selection: $mode) {
                 ForEach(availableModes, id: \.self) {
                     Text($0)
@@ -25,7 +28,7 @@ struct RestaurantPhotosView: View {
             }.pickerStyle(SegmentedPickerStyle())
             
             if mode == GRID_MODE {
-                RestaurantImagesGridView(imageUrls: imageUrls)
+                RestaurantImagesGridView(imageUrls: imageUrls, openFullscreenModal: {isModalShown.toggle()})
             } else {
                 RestaurantImagesListView(imageUrls: imageUrls)
             }
@@ -33,8 +36,32 @@ struct RestaurantPhotosView: View {
     }
 }
 
+struct FullscreenImageModal: View {
+    let show: Binding<Bool>
+    let closeModal: () -> Void
+    let imageUrls: [String]
+    
+    var body: some View {
+        Spacer().fullScreenCover(isPresented: show, content: {
+            ZStack(alignment: .topLeading) {
+                Color.black.ignoresSafeArea()
+
+                DestinationHeaderContainer(imageUrls: imageUrls)
+                Button(action: {closeModal()}, label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                })
+            }
+        })
+    }
+}
+
 struct RestaurantImagesGridView: View {
     let imageUrls: [String]
+    let openFullscreenModal: () -> Void
+    
     var body: some View {
         GeometryReader { geometry in
             LazyVGrid(
@@ -46,11 +73,13 @@ struct RestaurantImagesGridView: View {
                 spacing: 4,
                 content: {
                     ForEach(imageUrls, id: \.self) {imageUrl in
-                        KFImage(URL(string: imageUrl))
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: geometry.size.width/3, height: geometry.size.width/3)
-                            .clipped()
+                        Button(action: {self.openFullscreenModal()}, label: {
+                            KFImage(URL(string: imageUrl))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: geometry.size.width/3, height: geometry.size.width/3)
+                                .clipped()
+                        })
                     }
                 }
             ).padding(.horizontal, 4)

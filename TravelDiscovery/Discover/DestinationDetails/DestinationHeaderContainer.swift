@@ -35,8 +35,11 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     private var imageUrls: [String]
     lazy var allVCs: [UIViewController] = imageUrls.map { (imageName) -> UIViewController in
         let vc = UIHostingController(rootView:
-            KFImage(URL(string: imageName))
-                .resizable().scaledToFill()
+            ZStack {
+                Color.black
+                KFImage(URL(string: imageName))
+                    .resizable().scaledToFit()
+            }
         )
         return vc
     }
