@@ -14,7 +14,7 @@ let LIST_MODE = "List"
 struct RestaurantPhotosView: View {
     let imageUrls: [String]
     let availableModes = [GRID_MODE, LIST_MODE]
-    @State var mode = GRID_MODE
+    @State var mode = LIST_MODE
     
     var body: some View {
         ScrollView {
@@ -71,14 +71,27 @@ struct RestaurantImagesListView: View {
                         .frame(height: 250)
                         .clipped()
                     
-                    VStack(alignment: .leading) {
-                        Text("Here is the description of the photo. Here is the description of the photo. Here is the description of the photo. Here is the description of the photo.")
-                            .padding(.bottom, 8)
+                    VStack {
+                        HStack {
+                            HStack {
+                                Image(systemName: "heart")
+                                Image(systemName: "bubble.right")
+                                Image(systemName: "paperplane")
+                            }
+                            Spacer()
+                            Image(systemName: "bookmark")
+                        }.padding(.top, 4).padding(.bottom, 8)
                         
-                        Text("Posted on January 1, 2021.")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                        VStack(alignment: .leading) {
+                            Text("Here is the description of the photo. Here is the description of the photo. Here is the description of the photo. Here is the description of the photo.")
+                                .padding(.bottom, 8)
+                            
+                            Text("Posted on January 1, 2021.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 14))
+                        }
                     }.padding(.horizontal, 4)
+                    
                 }.padding(.bottom)
             }
         }
