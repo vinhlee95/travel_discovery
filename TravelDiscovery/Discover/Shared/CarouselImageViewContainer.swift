@@ -13,9 +13,10 @@ import Kingfisher
 struct CarouselImageViewContainer: UIViewControllerRepresentable {
     let imageUrls: [String]
     let shouldFillFrame: Bool
+    let activeIndex: Int?
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController(imageUrls: imageUrls, shouldFillFrame: shouldFillFrame)
+        let pvc = CustomPageViewController(imageUrls: imageUrls, shouldFillFrame: shouldFillFrame, activeIndex: activeIndex ?? 0)
         return pvc
     }
     
@@ -34,6 +35,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     private let secondVC = UIHostingController(rootView: Text("Second view"))
     private let thirdVC = UIHostingController(rootView: Text("Third view"))
     private var imageUrls: [String]
+    private var activeIndex: Int
     private let shouldFillFrame: Bool
     lazy var allVCs: [UIViewController] = imageUrls.map { (imageName) -> UIViewController in
         let vc = UIHostingController(rootView:
@@ -72,10 +74,11 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         return index == allVCs.count - 1 ? nil : allVCs[index + 1]
     }
     
-    init(imageUrls: [String], shouldFillFrame: Bool) {
+    init(imageUrls: [String], shouldFillFrame: Bool, activeIndex: Int) {
         // Initialize imageUrls injected from calling code
         self.imageUrls = imageUrls
         self.shouldFillFrame = shouldFillFrame
+        self.activeIndex = activeIndex
         
         // Show page dot
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
@@ -84,9 +87,9 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
         // Specify the very first page of the view
-        if let firstVc = allVCs.first {
-            setViewControllers([firstVc], direction: .forward, animated: true, completion: nil)            
-        }
+        let activeVc = allVCs[activeIndex]
+        setViewControllers([activeVc], direction: .forward, animated: true, completion: nil)
+        
         
         // Specify dataSource so that the view is swipe-able
         self.dataSource = self

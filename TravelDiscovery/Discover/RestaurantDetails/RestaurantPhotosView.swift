@@ -16,10 +16,11 @@ struct RestaurantPhotosView: View {
     let availableModes = [GRID_MODE, LIST_MODE]
     @State var mode = GRID_MODE
     @State var isModalShown = false
+    @State var activePhotoIndex = 0
     
     var body: some View {
         ScrollView {
-            FullscreenImageModal(show: $isModalShown, closeModal: {isModalShown.toggle()}, imageUrls: imageUrls)
+            FullscreenImageModal(show: $isModalShown, closeModal: {isModalShown.toggle()}, imageUrls: imageUrls, activeIndex: activePhotoIndex)
             
             Picker("Image picker", selection: $mode) {
                 ForEach(availableModes, id: \.self) {
@@ -28,11 +29,16 @@ struct RestaurantPhotosView: View {
             }.pickerStyle(SegmentedPickerStyle())
             
             if mode == GRID_MODE {
-                RestaurantImagesGridView(imageUrls: imageUrls, openFullscreenModal: {isModalShown.toggle()})
+                RestaurantImagesGridView(imageUrls: imageUrls, openFullscreenModal: self.openFullscreenModal)
             } else {
                 RestaurantImagesListView(imageUrls: imageUrls)
             }
         }.navigationBarTitle("All photos", displayMode: .inline)
+    }
+    
+    private func openFullscreenModal(index: Int) -> Void {
+        isModalShown.toggle()
+        self.activePhotoIndex = index
     }
 }
 
@@ -40,13 +46,14 @@ struct FullscreenImageModal: View {
     let show: Binding<Bool>
     let closeModal: () -> Void
     let imageUrls: [String]
+    let activeIndex: Int
     
     var body: some View {
         Spacer().fullScreenCover(isPresented: show, content: {
             ZStack(alignment: .topLeading) {
                 Color.black.ignoresSafeArea()
 
-                CarouselImageViewContainer(imageUrls: imageUrls, shouldFillFrame: false)
+                CarouselImageViewContainer(imageUrls: imageUrls, shouldFillFrame: false, activeIndex: activeIndex)
                 Button(action: {closeModal()}, label: {
                     Image(systemName: "xmark")
                         .font(.system(size: 28, weight: .bold))
@@ -60,7 +67,7 @@ struct FullscreenImageModal: View {
 
 struct RestaurantImagesGridView: View {
     let imageUrls: [String]
-    let openFullscreenModal: () -> Void
+    let openFullscreenModal: (_ index: Int) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -73,7 +80,7 @@ struct RestaurantImagesGridView: View {
                 spacing: 4,
                 content: {
                     ForEach(imageUrls, id: \.self) {imageUrl in
-                        Button(action: {self.openFullscreenModal()}, label: {
+                        Button(action: {self.handleSelectPhoto(index: imageUrls.firstIndex(of: imageUrl))}, label: {
                             KFImage(URL(string: imageUrl))
                                 .resizable()
                                 .scaledToFill()
@@ -84,6 +91,11 @@ struct RestaurantImagesGridView: View {
                 }
             ).padding(.horizontal, 4)
         }
+    }
+    
+    private func handleSelectPhoto(index: Int?) -> Void {
+        let activeIndex = index ?? 0
+        self.openFullscreenModal(activeIndex)
     }
 }
 
