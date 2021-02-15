@@ -19,21 +19,23 @@ struct RestaurantPhotosView: View {
     @State var activePhotoIndex = 0
     
     var body: some View {
-        ScrollView {
-            FullscreenImageModal(show: $isModalShown, closeModal: {isModalShown.toggle()}, imageUrls: imageUrls, activeIndex: activePhotoIndex)
-            
-            Picker("Image picker", selection: $mode) {
-                ForEach(availableModes, id: \.self) {
-                    Text($0)
+        GeometryReader { geometry in
+            ScrollView {
+                FullscreenImageModal(show: $isModalShown, closeModal: {isModalShown.toggle()}, imageUrls: imageUrls, activeIndex: activePhotoIndex)
+                
+                Picker("Image picker", selection: $mode) {
+                    ForEach(availableModes, id: \.self) {
+                        Text($0)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+                
+                if mode == GRID_MODE {
+                    RestaurantImagesGridView(imageUrls: imageUrls, openFullscreenModal: self.openFullscreenModal, geometry: geometry)
+                } else {
+                    RestaurantImagesListView(imageUrls: imageUrls)
                 }
-            }.pickerStyle(SegmentedPickerStyle())
-            
-            if mode == GRID_MODE {
-                RestaurantImagesGridView(imageUrls: imageUrls, openFullscreenModal: self.openFullscreenModal)
-            } else {
-                RestaurantImagesListView(imageUrls: imageUrls)
-            }
-        }.navigationBarTitle("All photos", displayMode: .inline)
+            }.navigationBarTitle("All photos", displayMode: .inline)
+        }
     }
     
     private func openFullscreenModal(index: Int) -> Void {
@@ -68,29 +70,28 @@ struct FullscreenImageModal: View {
 struct RestaurantImagesGridView: View {
     let imageUrls: [String]
     let openFullscreenModal: (_ index: Int) -> Void
+    let geometry: GeometryProxy
     
     var body: some View {
-        GeometryReader { geometry in
-            LazyVGrid(
-                // define grid system and spacing between COLUMNS
-                columns: [
-                    GridItem(.adaptive(minimum: geometry.size.width/3 - 20, maximum: 300), spacing: 16)
-                ],
-                // define spacing between ROWS
-                spacing: 4,
-                content: {
-                    ForEach(imageUrls, id: \.self) {imageUrl in
-                        Button(action: {self.handleSelectPhoto(index: imageUrls.firstIndex(of: imageUrl))}, label: {
-                            KFImage(URL(string: imageUrl))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: geometry.size.width/3, height: geometry.size.width/3)
-                                .clipped()
-                        })
-                    }
+        LazyVGrid(
+            // define grid system and spacing between COLUMNS
+            columns: [
+                GridItem(.adaptive(minimum: geometry.size.width/3 - 20, maximum: 300), spacing: 16)
+            ],
+            // define spacing between ROWS
+            spacing: 4,
+            content: {
+                ForEach(imageUrls, id: \.self) {imageUrl in
+                    Button(action: {self.handleSelectPhoto(index: imageUrls.firstIndex(of: imageUrl))}, label: {
+                        KFImage(URL(string: imageUrl))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width/3, height: geometry.size.width/3)
+                            .clipped()
+                    })
                 }
-            ).padding(.horizontal, 4)
-        }
+            }
+        ).padding(.horizontal, 4)
     }
     
     private func handleSelectPhoto(index: Int?) -> Void {
