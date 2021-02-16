@@ -42,8 +42,11 @@ struct RestaurantDetailsView: View {
                         Text("Customer reviews").heading().padding(.vertical, 8)
                         VStack {
                             ForEach(restaurantDetail.reviews, id: \.self) { review in
-                                ReviewCell(review: review)
-                                
+                                NavigationLink(
+                                    destination: UserDetailsView(user: review.user),
+                                    label: {
+                                        ReviewCell(review: review).foregroundColor(.black)
+                                    })
                             }
                         }
                         

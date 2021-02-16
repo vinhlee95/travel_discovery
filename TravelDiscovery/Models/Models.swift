@@ -60,11 +60,16 @@ struct Dish: Decodable, Hashable {
 }
 
 struct Review: Decodable, Hashable {
-    let user: ReviewUser
+    let user: User
     let rating: Int
     let text: String
 }
 
-struct ReviewUser: Decodable, Hashable {
-    let firstName, lastName, profileImage: String
+struct User: Decodable, Hashable {
+    let firstName, lastName, username, profileImage: String
+    let followers, following: Int
+    
+    func getFullname() -> String {
+        return self.firstName + " " + self.lastName
+    }
 }
