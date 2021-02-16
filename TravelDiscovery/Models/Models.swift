@@ -68,8 +68,14 @@ struct Review: Decodable, Hashable {
 struct User: Decodable, Hashable {
     let firstName, lastName, username, profileImage: String
     let followers, following: Int
+    let posts: [Post]
     
     func getFullname() -> String {
         return self.firstName + " " + self.lastName
     }
+}
+
+struct Post: Decodable, Hashable {
+    let title, imageUrl, views: String
+    let hashtags: [String]
 }
